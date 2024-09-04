@@ -19,13 +19,16 @@
 - [React](https://reactjs.org/) 18.3.1
 - [TypeScript](https://www.typescriptlang.org/) 5.5.3
 - [Vite](https://vitejs.dev/) 5.4.1
-
-## スタイル
 - [Tailwind CSS](https://tailwindcss.com/) 3.4.10
 
-## ホスティング
-- [Vercel](https://vercel.com/)
+## バックエンド
+- [Ruby](https://www.ruby-lang.org/en/) 3.2.2
+- [Rails](https://rubyonrails.org/) 7.2.1
+- [PostgreSQL](https://www.postgresql.org/) 14
 
+## ホスティング
+- フロントエンド: [Vercel](https://vercel.com/)
+- バックエンド: [Heroku](https://www.heroku.com/)
 
 # 機能一覧
 - 求人の一覧表示
@@ -36,40 +39,14 @@
   - 求人タイトル、カテゴリ、年収(万円)を入力し投稿ボタンを押せば、求人一覧画面に移動し投稿内容を確認できます。
 
 # 動作手順
-ローカルで動作させる場合、以下のように環境開発してください。
 
-- Viteを使ってビルドしています。ReactとTypescriptを選択してください。
+app_kadai2ファイルをクローンしてきてください。
+Dockerを起動すると、以下のようなエラーが出る可能性があります。
 ```
-npm create vite@latest (アプリケーション名) //Reactプロジェクト作成
-npm install //依存関係のインストール
+Error: Cannot find module @rollup/rollup-linux-arm64-gnu.
 ```
-以下のTailwind CSSの設定は、GitHubリポジトリのファイルにすでに設定済みですが記載しておきます。
-
-- Tailwind CSSをプロジェクトに追加し、設定ファイルを生成する。
+その場合、下記のコマンドでフロントエンドのコンテナに依存関係をインストールしてください。
 ```
-npm install tailwindcss
-npx tailwindcss init -p //設定ファイルの生成。
-```
-- tailwind.config.jsファイルを開き、次のように設定します。
-```
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
-```
-- src/index.cssにTailwindの基本スタイルをインポートします。
-```
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-サーバーを起動し、表紙されたポートにアクセスしてください。
-```
-npm run dev
+docker-compose run --rm frontend yarn install
+docker-compose up --build
 ```
